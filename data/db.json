@@ -1,0 +1,14 @@
+{
+  "users": [
+    {
+      "display_name": "Leonel Vieyra",
+      "email": "houtwolf@gmail.com",
+      "href": "https://api.spotify.com/v1/users/vspzodyaqjevy1dfuh7liglwq",
+      "product": "premium",
+      "images": [
+        "http://via.placeholder.com/200x200"
+      ],
+      "_id": "3cb54f8d-b596-4bb3-8421-9a77f88bd587"
+    }
+  ]
+}
