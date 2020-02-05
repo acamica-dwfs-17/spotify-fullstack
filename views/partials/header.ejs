@@ -1,26 +1,30 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#"><%= title %></a>
-  <button
-    class="navbar-toggler"
-    type="button"
-    data-toggle="collapse"
-    data-target="#navbarSupportedContent"
-    aria-controls="navbarSupportedContent"
-    aria-expanded="false"
-    aria-label="Toggle navigation"
-  >
-    <span class="navbar-toggler-icon"></span>
-  </button>
+<header>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/"><%= title || user.display_name %></a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <% for( let i = 0; i < menu.length; i++ ) { %>
-      <li class="nav-item">
-        <a class="nav-link" href="<%= menu[i].href%>">
-          <%= menu[i].title%>
-        </a>
-      </li>
-      <% } %>
-    </ul>
-  </div>
-</nav>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+       <% if (menu) {%>
+        <% for( let i = 0; i < menu.length; i++ ) { %>
+          <li class="nav-item">
+            <a class="nav-link" href="<%= menu[i].href%>">
+              <%= menu[i].title%>
+            </a>
+          </li>
+          <% } %>
+        <% } %>
+      </ul>
+    </div>
+  </nav>
+</header>

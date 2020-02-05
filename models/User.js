@@ -14,7 +14,15 @@ const db = require("../lib/database");
  */
 
 class User {
-  constructor({ display_name, email, href, product, images, _id = 0 }) {
+  constructor({
+    display_name,
+    email,
+    href,
+    product,
+    images,
+    _id = 0,
+    refresh_token
+  }) {
     this.display_name = display_name;
     this.email = email;
     this.href = href;
