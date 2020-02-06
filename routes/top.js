@@ -1,62 +1,57 @@
 const express = require("express");
 const router = express.Router();
+const _ = require("lodash");
 
 const authMiddleware = require("../middleware/spotify-auth");
 
-const { authUrl } = require("../lib/spotify");
-
 const title = process.env.TITLE || "Spotify App";
 
-router.get("/artists", authMiddleware, async (req, res) => {
-  if (req.userData) {
-    let top = await req.authenticatedUser.getMyTopArtists({
-      limit: 100,
-      time_range: "long_term"
-    });
-    res.render("top-artists", {
-      title,
-      user: req.userData,
-      menu: [
-        {
-          title: "Get My Top Artists",
-          href: "/top/artists"
-        },
-        {
-          title: "Get My Top Tracks",
-          href: "/top/tracks"
-        }
-      ],
-      top: top.body.items
-    });
-  } else {
-    res.redirect("/");
-  }
-});
+function createTopHandler(type) {
+  return async (req, res) => {
+    let { limit = 20, range = "short_term", page = 1 } = req.query;
 
-router.get("/tracks", authMiddleware, async (req, res) => {
-  if (req.userData) {
-    let top = await req.authenticatedUser.getMyTopTracks({
-      limit: 100,
-      time_range: "long_term"
-    });
-    res.render("top-tracks", {
-      title,
-      user: req.userData,
-      menu: [
-        {
-          title: "Get My Top Artists",
-          href: "/top/artists"
-        },
-        {
-          title: "Get My Top Tracks",
-          href: "/top/tracks"
-        }
-      ],
-      top: top.body.items
-    });
-  } else {
-    res.redirect("/");
-  }
-});
+    if (req.userData) {
+      const total = 50;
+      const pages = Math.ceil(total / limit);
+
+      const offset = limit * (page - 1);
+
+      let top = await req.authenticatedUser[`getMyTop${_.capitalize(type)}`]({
+        limit: limit,
+        time_range: range,
+        offset
+      });
+
+      console.log(pages);
+
+      res.render(`top-${type}`, {
+        title,
+        user: req.userData,
+        limit,
+        range,
+        pages,
+        page,
+        type,
+        menu: [
+          {
+            title: "Get My Top Artists",
+            href: "/top/artists"
+          },
+          {
+            title: "Get My Top Tracks",
+            href: "/top/tracks"
+          }
+        ],
+        top: top.body.items
+      });
+    } else {
+      res.redirect("/");
+    }
+  };
+}
+
+router.get("/artists", authMiddleware, createTopHandler("artists"));
+
+router.get("/tracks", authMiddleware, createTopHandler("tracks"));
 
 module.exports = router;

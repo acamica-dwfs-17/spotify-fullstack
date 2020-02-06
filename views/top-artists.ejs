@@ -7,8 +7,9 @@
   </head>
   <body>
     <%- include partials/header.ejs %>
-    <div class="row d-flex m-5">
-      <h1>Top Artists</h1>
+    <div class="row m-5">
+      <h1 class="w-100">Top Artists</h1>
+      <%- include partials/topFilter.ejs %>
       <table class="table mt-3">
         <thead>
           <tr>
@@ -21,7 +22,7 @@
         <tbody>
           <% for( let i = 0; i < top.length; i++ ) { %>
             <tr>
-              <th scope="row">#<%= i+1 %> </th>
+              <th scope="row">#<%= i+1 + parseInt((page - 1) * limit) %> </th>
               <td class="d-flex">
                 <div class="d-flex justify-content-center rounded-circle mr-3" style="width: 5rem; background: black;">
                   <img class="rounded-circle" style="height: 5rem;" src="<%= top[i].images[0].url%>"/>
@@ -42,6 +43,7 @@
           <% } %>
         </tbody>
       <table>
+      <%- include partials/paginator.ejs %>
     </div>
   </body>
 </html>

@@ -1,0 +1,29 @@
+<div class="row d-flex justify-content-center w-100">
+  <nav aria-label="pagination">
+    <ul class="pagination">
+      <li class="page-item <%= page == 1 ? 'disabled' : ''%>">
+        <a
+          class="page-link"
+          href="/top/<%= type %>/?page=<%= page - 1 %>&range=<%= range %>&limit=<%= limit %>"
+          >Previous</a
+        >
+      </li>
+      <% for( let i = 0; i < pages; i++ ) { %>
+      <li class="page-item <%= page == i+1 ? 'active' : ''%>">
+        <a
+          class="page-link"
+          href="/top/<%= type %>/?page=<%= i+1 %>&range=<%= range %>&limit=<%= limit %>"
+          ><%= i+1 %></a
+        >
+      </li>
+      <% } %>
+      <li class="page-item  <%= page == pages ? 'disabled' : ''%>">
+        <a
+          class="page-link"
+          href="/top/<%= type %>/?page=<%= parseInt(page) + 1 %>&range=<%= range %>&limit=<%= limit %>"
+          >Next</a
+        >
+      </li>
+    </ul>
+  </nav>
+</div>
