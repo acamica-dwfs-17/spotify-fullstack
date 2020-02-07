@@ -8,7 +8,7 @@ const title = process.env.TITLE || "Spotify App";
 
 function createTopHandler(type) {
   return async (req, res) => {
-    let { limit = 20, range = "short_term", page = 1 } = req.query;
+    let { limit = 10, range = "short_term", page = 1 } = req.query;
 
     if (req.userData) {
       const total = 50;
