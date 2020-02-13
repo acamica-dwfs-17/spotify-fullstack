@@ -24,7 +24,9 @@ function createTopHandler(type) {
 
       console.log(pages);
 
-      res.render(`top-${type}`, {
+      res.render(`top`, {
+        _,
+        type,
         title,
         user: req.userData,
         limit,

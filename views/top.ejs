@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link rel="stylesheet" href="/stylesheets/bootstrap.css" />
+  </head>
+  <body>
+    <%- include partials/header.ejs %>
+      <div class="row m-5">
+        <h1 class="w-100">Top <%= _.capitalize(type) %> </h1>
+        <%- include partials/topFilter.ejs %>
+        <table class="table mt-3">
+          <thead>
+          <tr>
+            <% if (type === 'artists') { %>
+              <th scope="col">Position</th>
+              <th scope="col">Artist</th>
+              <th scope="col">Genres</th>
+              <th scope="col">Listen</th>
+            <% } %>
+
+            <% if (type === 'tracks') { %>
+              <th scope="col">Position</th>
+              <th scope="col">Artist</th>
+              <th scope="col">Track Name</th>
+              <th scope="col">Album</th>
+              <th scope="col">Listen</th>
+            <% } %>
+          </tr>
+          </thead>
+          <tbody>
+            <% for( let i = 0; i < top.length; i++ ) { %>
+              <tr>
+                <%if (type === 'artists') { %>
+                   <th scope="row">#<%= i+1 + parseInt((page - 1) * limit) %> </th>
+                   <td class="d-flex">
+                     <div class="d-flex justify-content-center rounded-circle mr-3" style="width: 5rem; background: black;">
+                       <img class="rounded-circle" style="height: 5rem;" src="<%= top[i].images[0].url%>"/>
+                     </div>
+                     <%= top[i].name %>
+                   </td>
+                   <td>
+                     <%= top[i].genres.join(', ') %>
+                   </td>
+                   <td>
+                     <button class="btn btn-link">
+                       <a href="<%= top[i].external_urls.spotify %> " class="href">
+                         Listen to <%= top[i].name %>
+                       </a>
+                     </button>
+                   </td>
+                <% } %>
+
+               <%if (type === 'tracks') { %>
+                 <th scope="row">#<%= i+1 %> </th>
+                 <td>
+                   <%= top[i].artists.length >1 ? top[i].artists.map(({name})=>name).join(', ') : top[i].artists[0].name %>
+                 </td>
+                 <td>
+                   <%= top[i].name %>
+                 </td>
+                 <td>
+                   <%= top[i].album.name%>
+                 </td>
+                 <td>
+                   <button class="btn btn-link text-left">
+                     <a href="<%= top[i].external_urls.spotify %> " class="href">
+                       Listen to <%= top[i].name %> from <%= top[i].artists.length >1 ? top[i].artists.map(({name})=>name).join(', ') : top[i].artists[0].name %>
+
+                     </a>
+                   </button>
+                 </td>
+                 <% } %>
+               </tr>
+            <% } %>
+
+          </tbody>
+        <table>
+        <%- include partials/paginator.ejs %>
+      </div>
+  </body>
+</html>
