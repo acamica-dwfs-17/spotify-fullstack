@@ -1,19 +1,117 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel="stylesheet" href="/stylesheets/style.css" />
-    <link rel="stylesheet" href="/stylesheets/bootstrap.css" />
-  </head>
-  <body>
-    <%- include partials/header.ejs %>
+    <head>
+        <title><%= title %></title>
+        <link rel="stylesheet" href="/stylesheets/style.css" />
+        <link rel="stylesheet" href="/stylesheets/bootstrap.css" />
+        <script src="https://use.fontawesome.com/0b3435a4dc.js"></script>
+    </head>
+    <body>
+        <%- include partials/header.ejs %>
 
-    <div class="row d-flex align-items-center flex-column m-5">
-      <h1><%= title %></h1>
-      <p>Welcome to <%= title %></p>
-      <a href="<%= authUrl%>" class="btn btn-success">
-        Login
-      </a>
-    </div>
-  </body>
+        <div class="row d-flex align-items-center flex-column m-5">
+            <h1><%= title %></h1>
+            <p>Welcome to <%= title %></p>
+            <div class="btn-group">
+                <a href="<%= authUrl%>" class="btn btn-success">
+                    <i class="fa fa-spotify"></i>
+                </a>
+                <a class="btn btn-success" id="sing-fb">
+                    <i class="fa fa-facebook-square"></i>
+                </a>
+                <a class="btn btn-success" id="sing-google">
+                    <i class="fa fa-google"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+        <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-app.js"></script>
+
+        <!-- Add Firebase products that you want to use -->
+        <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-auth.js"></script>
+
+        <script>
+            // Your web app's Firebase configuration
+            var firebaseConfig = {
+                apiKey: 'AIzaSyA4c8kKjjDYX2XoCYsQiTVeU5QjKrZX2Mk',
+                authDomain: 'akmik-a63c6.firebaseapp.com',
+                databaseURL: 'https://akmik-a63c6.firebaseio.com',
+                projectId: 'akmik-a63c6',
+                storageBucket: 'akmik-a63c6.appspot.com',
+                messagingSenderId: '713161444824',
+                appId: '1:713161444824:web:763fb43e5246e4fca0b6ad',
+                measurementId: 'G-2CEQ7WH1DX'
+            };
+            // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
+
+            document.getElementById('sing-fb').addEventListener('click', () => {
+                var providerFB = new firebase.auth.FacebookAuthProvider();
+                providerFB.addScope('user_birthday');
+                firebase
+                    .auth()
+                    .signInWithPopup(providerFB)
+                    .then(function(result) {
+                        // This gives you a Google Access Token. You can use it to access the Google API.
+                        var token = result.credential.accessToken;
+                        // The signed-in user info.
+                        var user = result.user;
+                        console.log(token);
+
+                        console.log(user.providerData);
+
+                        // ...
+                    })
+                    .catch(function(error) {
+                        // Handle Errors here.
+                        var errorCode = error.code;
+                        var errorMessage = error.message;
+                        // The email of the user's account used.
+                        var email = error.email;
+                        // The firebase.auth.AuthCredential type that was used.
+                        var credential = error.credential;
+                        // ...
+                    });
+            });
+
+            document.getElementById('sing-google').addEventListener('click', () => {
+                var provider = new firebase.auth.GoogleAuthProvider();
+                firebase
+                    .auth()
+                    .signInWithPopup(provider)
+                    .then(function(result) {
+                        // This gives you a Google Access Token. You can use it to access the Google API.
+                        var token = result.credential.accessToken;
+                        // The signed-in user info.
+                        var user = result.user;
+                        console.log(token);
+
+                        console.log(user.providerData);
+                        var miInit = {
+                            method: 'POST',
+                            cache: 'default',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(user.providerData)
+                        };
+
+                        fetch('/api/user', miInit).then(console.log);
+
+                        // ...
+                    })
+                    .catch(function(error) {
+                        // Handle Errors here.
+                        var errorCode = error.code;
+                        var errorMessage = error.message;
+                        // The email of the user's account used.
+                        var email = error.email;
+                        // The firebase.auth.AuthCredential type that was used.
+                        var credential = error.credential;
+                        // ...
+                    });
+            });
+        </script>
+    </body>
 </html>

@@ -7,7 +7,6 @@ const Model = Sequelize.Model;
 class User extends Model {}
 User.init(
     {
-        // attributes
         FirstName: {
             type: Sequelize.STRING
         },
@@ -30,29 +29,30 @@ User.init(
             allowNull: false
         },
         ProviderType: {
-            type: Sequelize.INTEGER
+            type: Sequelize.STRING
         },
         AuthApi: {
             type: Sequelize.STRING
         },
-        Created: {
-            type: Sequelize.DATE,
-            allowNull: false
-        },
-        Updated: {
-            type: Sequelize.DATE
-        },
         LastLogin: {
             type: Sequelize.DATE
+        },
+        Active: {
+            type: Sequelize.BOOLEAN
         }
     },
     {
         sequelize,
-        modelName: 'Users'
+        timestamps: true,
+        modelName: 'Users',
     }
 );
+//User.sync({force:true});
 
-// Create a new user
-User.create({ FirstName: 'Jane', LastName: 'Doe' }).then(jane => {
-  console.log("Jane's auto-generated ID:", jane.id);
-});
+module.exports = User
+
+
+// // Create a new user
+// User.create({ FirstName: 'Jane', LastName: 'Doe' }).then(jane => {
+//   console.log("Jane's auto-generated ID:", jane.id);
+// });
