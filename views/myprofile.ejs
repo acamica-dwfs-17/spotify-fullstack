@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link rel="stylesheet" href="/stylesheets/bootstrap.css" />
+    <script src="https://use.fontawesome.com/0b3435a4dc.js"></script>
+  </head>
+  <body>
+    <%- include partials/header.ejs %>
+      <div class="row m-5">
+        <h1 class="w-100">My Profile</h1>
+        <p>Others logins</p>
+        <div class="btn-group">
+            <a href="''" class="btn btn-success">
+                <i class="fa fa-spotify"></i>
+            </a>
+            <a class="btn btn-success" id="sing-fb">
+                <i class="fa fa-facebook-square"></i>
+            </a>
+            <a class="btn btn-success" id="sing-google">
+                <i class="fa fa-google"></i>
+            </a>
+        </div>
+      </div>
+  </body>
+</html>

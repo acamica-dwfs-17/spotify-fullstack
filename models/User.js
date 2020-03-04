@@ -1,6 +1,6 @@
 // @ts-nocheck
 const Sequelize = require('sequelize');
-const sequelize = require('../lib/database');
+const db = require('../lib/database');
 
 // @ts-ignore
 const Model = Sequelize.Model;
@@ -39,12 +39,14 @@ User.init(
         },
         Active: {
             type: Sequelize.BOOLEAN
+        },
+        Token: {
+            type: Sequelize.STRING
         }
     },
     {
-        sequelize,
+        sequelize: db,
         timestamps: true,
-        modelName: 'Users',
     }
 );
 //User.sync({force:true});
