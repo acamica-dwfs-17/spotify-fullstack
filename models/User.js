@@ -1,7 +1,7 @@
 // @ts-nocheck
 const Sequelize = require('sequelize');
 const db = require('../lib/database');
-
+const UserRelation = require('../models/UserRelation');
 // @ts-ignore
 const Model = Sequelize.Model;
 class User extends Model {}
@@ -41,7 +41,7 @@ User.init(
             type: Sequelize.BOOLEAN
         },
         Token: {
-            type: Sequelize.STRING
+            type: Sequelize.TEXT
         }
     },
     {
@@ -50,7 +50,7 @@ User.init(
     }
 );
 //User.sync({force:true});
-
+User.hasMany(UserRelation, {foreignKey: 'UserID_1'})
 module.exports = User
 
 

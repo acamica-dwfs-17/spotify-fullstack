@@ -7,13 +7,8 @@ module.exports = async (req, res, next) => {
         if (token) {
             let user = await User.findOne({
                 where: { Token: token }
-                // include: [{model: Apikey}]
             });
-
-            console.log(user);
-
             if (user) {
-                // req.authenticatedUser = api;
                 req.userData = user;
             }
         }

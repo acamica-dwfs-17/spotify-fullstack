@@ -3,30 +3,8 @@ var router = express.Router();
 
 const authSpotifyMiddleware = require("../middleware/spotify-auth");
 const authMiddleware = require("../middleware/auth");
+const userController = require('../controllers/UserController');
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-    res.send('respond with a resource');
-});
-
-router.get('/:id/:sarasa', function(req, res, next) {
-    res.send(req.params.id + ' ' + req.params.sarasa);
-});
-
-router.get('/myprofile', authMiddleware, function(req, res, next) {
-    res.render('myprofile', {
-        title: 'My profile',
-        menu: [
-            {
-                title: 'Get My Top Artists',
-                href: '/top/artists'
-            },
-            {
-                title: 'Get My Top Tracks',
-                href: '/top/tracks'
-            }
-        ],
-    });
-});
+router.get('/myprofile', authMiddleware, userController.myprofile);
 
 module.exports = router;

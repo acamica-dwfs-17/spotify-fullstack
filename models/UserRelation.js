@@ -32,5 +32,6 @@ UserRelation.init(
     }
 );
 
-UserRelation.sync({force:true});
+// UserRelation.sync({force:true});
 // // Create a new use
+module.exports = UserRelation
